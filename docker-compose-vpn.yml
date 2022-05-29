@@ -1,0 +1,45 @@
+version: "3.1"
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "81:80/tcp"
+    environment:
+      TZ: ${TZ}
+      PIHOLE_DNS_: ${PEERDNS}#5053;8.8.8.8
+    volumes:
+      - ${DOCKERDATA}pihole/etc-pihole/:/etc/pihole/
+      - ${DOCKERDATA}pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
+  unbound:
+    container_name: unbound
+    image: klutchell/unbound
+    ports:
+      - "5053:5053/udp"
+    restart: unless-stopped
+  wireguard:
+    image: ghcr.io/linuxserver/wireguard
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - TZ=${TZ}
+      - SERVERURL=${SERVERURL}
+      - SERVERPORT=${SERVERPORT}
+      - PEERS=${PEERS}
+      - PEERDNS=${PEERDNS}
+    volumes:
+      - ${DOCKERDATA}wireguard/config:/config
+      - /lib/modules:/lib/modules
+    ports:
+      - ${SERVERPORT}:51820/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
