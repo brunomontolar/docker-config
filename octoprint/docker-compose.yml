@@ -13,3 +13,8 @@ services:
     restart: unless-stopped
     volumes:
       - ${DOCKERDATA}octoprint:/octoprint
+    labels:
+      - flame.type=application
+      - flame.name=Octoprint
+      - flame.url=https://octoprint.${DOMAIN}.com.br
+      - flame.icon=custom

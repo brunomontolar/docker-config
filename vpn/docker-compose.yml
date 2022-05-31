@@ -17,6 +17,11 @@ services:
     cap_add:
       - NET_ADMIN
     restart: unless-stopped
+    labels:
+      - flame.type=application
+      - flame.name=PiHole
+      - flame.url=https://pihole.${DOMAIN}.com.br
+      - flame.icon=custom
   unbound:
     container_name: unbound
     image: klutchell/unbound

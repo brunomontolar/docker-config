@@ -8,9 +8,14 @@ services:
     volumes:
       - ${DOCKERDATA}nextcloud/postgresql:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB_FILE=nextcloud
+      - POSTGRES_DB_FILE=${DATABASE}
       - POSTGRES_USER_FILE=${USERNAME}
       - POSTGRES_PASSWORD_FILE=${PSSWD}
+    labels:
+      - flame.type=application
+      - flame.name=NextCloud
+      - flame.url=https://cloud.${DOMAIN}.com.br
+      - flame.icon=custom
 
   app:
     image: nextcloud
@@ -22,7 +27,7 @@ services:
       - ${DOCKERDATA}nextcloud/nextcloud:/var/www/html
     environment:
       - POSTGRES_HOST=db
-      - POSTGRES_DB_FILE=nextcloud
+      - POSTGRES_DB_FILE=${DATABASE}
       - POSTGRES_USER_FILE=${USERNAME}
       - POSTGRES_PASSWORD_FILE=${PSSWD}
       - NEXTCLOUD_ADMIN_PASSWORD_FILE=${PSSWD}

@@ -10,8 +10,7 @@ services:
       - ${DOCKERDATA}portainer/data:/data
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
-    - flame.type=application # "app" works too
+    - flame.type=application
     - flame.name=Portainer
-    - flame.url=https://portainer.bmont.com.br
-    - flame.icon=docker # optional, default is "docker"
-  # - flame.icon=custom to make changes in app. ie: custom icon upload
+    - flame.url=https://portainer.${DOMAIN}.com.br
+    - flame.icon=custom
