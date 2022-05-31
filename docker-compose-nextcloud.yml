@@ -1,0 +1,29 @@
+version: '3.2'
+
+services:
+  db:
+    image: postgres
+    restart: unless-stopped
+    volumes:
+      - ${DOCKERDATA}nextcloud/postgresql:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB_FILE=postgres_db
+      - POSTGRES_USER_FILE=postgres_user
+      - POSTGRES_PASSWORD_FILE=postgres_password
+
+  nextcloud:
+    image: nextcloud
+    restart: unless-stopped
+    ports:
+      - 8080:80
+    volumes:
+      - ${DOCKERDATA}nextcloud/nextcloud:/var/www/html
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_DB_FILE=nextcloud
+      - POSTGRES_USER_FILE=${USERNAME}
+      - POSTGRES_PASSWORD_FILE=${PSSWD}
+      - NEXTCLOUD_ADMIN_PASSWORD_FILE=${PSSWD}
+      - NEXTCLOUD_ADMIN_USER_FILE=${USERNAME}
+    depends_on:
+      - db
