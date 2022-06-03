@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+
+  traefik:
+    image: traefik:v2.2
+    container_name: traefik
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.api.rule=Host(`traefik.${DOMAIN}.com.br`)'
+      - 'traefik.http.routers.api.entrypoints=https'
+      - 'traefik.http.routers.api.service=api@internal'
+      - 'traefik.http.routers.api.tls=true'
+    ports:
+      - 80:80
+      - 443:443
+    command:
+      - '--api'
+      - '--providers.docker=true'
+      - '--providers.docker.exposedByDefault=false'
+      - '--entrypoints.http=true'
+      - '--entrypoints.http.address=:80'
+      - '--entrypoints.http.http.redirections.entrypoint.to=https'
+      - '--entrypoints.http.http.redirections.entrypoint.scheme=https'
+      - '--entrypoints.https=true'
+      - '--entrypoints.https.address=:443'
+      - '--log=true'
+      - '--log.level=DEBUG'
+      - '--log.filepath=/var/log/traefik.log'
+
+  authelia:
+    image: authelia/authelia
+    container_name: authelia
+    volumes:
+      - ${DOCKERDATA}authelia:/config
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.authelia.rule=Host(`login.${DOMAIN}.com.br`)'
+      - 'traefik.http.routers.authelia.entrypoints=https'
+      - 'traefik.http.routers.authelia.tls=true'
+      - 'traefik.http.middlewares.authelia.forwardauth.address=http://authelia:9091/api/verify?rd=https://login.${DOMAIN}.com.br/'
+      - 'traefik.http.middlewares.authelia.forwardauth.trustForwardHeader=true'
+      - 'traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=Remote-User, Remote-Groups, Remote-Name, Remote-Email'
+      - 'traefik.http.middlewares.authelia-basic.forwardauth.address=http://authelia:9091/api/verify?auth=basic'
+      - 'traefik.http.middlewares.authelia-basic.forwardauth.trustForwardHeader=true'
+      - 'traefik.http.middlewares.authelia-basic.forwardauth.authResponseHeaders=Remote-User, Remote-Groups, Remote-Name, Remote-Email'
+    expose:
+      - 9091
+    restart: unless-stopped
+    environment:
+      - TZ=${TZ}
