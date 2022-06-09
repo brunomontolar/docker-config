@@ -7,6 +7,7 @@ services:
     container_name: traefik
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ${DOCKERDATA}traefik/traefik.toml:/traefik.toml
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.api.rule=Host(`traefik.${DOMAIN}.com.br`)'
@@ -16,6 +17,7 @@ services:
     ports:
       - 80:80
       - 443:443
+      - 8080:8080
     command:
       - '--api'
       - '--providers.docker=true'
@@ -29,6 +31,16 @@ services:
       - '--log=true'
       - '--log.level=DEBUG'
       - '--log.filepath=/var/log/traefik.log'
+
+  redis:
+    image: redis:alpine
+    volumes:
+      - ${DOCKERDATA}redis:/data
+    expose:
+      - 6379
+    restart: unless-stopped
+    environment:
+      - TZ=${TZ}
 
   authelia:
     image: authelia/authelia
