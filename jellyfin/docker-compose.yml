@@ -1,0 +1,30 @@
+version: "2.1"
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      - JELLYFIN_PublishedServerUrl=${IP}
+    volumes:
+      - /path/to/library:/config #Jellyfin folder inside NAS
+      - /path/to/tvseries:/data/tvshows #TV Shows folder inside NAS
+      - /path/to/movies:/data/movies #Movies folder inside NAS
+    ports:
+      - 8096:8096 #HTTP WebUI
+      # - 8920:8920 #HTTPS WebUI
+      - 7359:7359/udp #Allows clients to discover Jellyfin on the local network
+      - 1900:1900/udp #Service discovery used by DNLA and clients
+    restart: unless-stopped
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.jellyfin.rule=Host(`jellyfin.${DOMAIN}.com.br`)'
+      - 'traefik.http.routers.jellyfin.entrypoints=https'
+      - 'traefik.http.routers.jellyfin.tls=true'
+      - 'traefik.http.routers.jellyfin.middlewares=authelia@docker'
+      - flame.type=application
+      - flame.name=Jellyfin
+      - flame.url=https://jellyfin.${DOMAIN}.com.br
+      - flame.icon=custom
