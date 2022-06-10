@@ -1,0 +1,21 @@
+version: "2.1"
+services:
+  filebot:
+    image: jlesage/filebot:latest
+    container_name: filebot
+    volumes:
+      - ${CONFIG_FOLDER}:/config:rw #Filebot configuration files
+      - ${STORAGE_FOLDER}:/storage:rw #Storage where files will be renamed
+    ports:
+      - 5800:5800
+    restart: unless-stopped
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.filebot.rule=Host(`filebot.${DOMAIN}.com.br`)'
+      - 'traefik.http.routers.filebot.entrypoints=https'
+      - 'traefik.http.routers.filebot.tls=true'
+      - 'traefik.http.routers.filebot.middlewares=authelia@docker'
+      - flame.type=application
+      - flame.name=filebot
+      - flame.url=https://filebot.${DOMAIN}.com.br
+      - flame.icon=custom
