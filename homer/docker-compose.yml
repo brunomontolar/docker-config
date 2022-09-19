@@ -5,9 +5,11 @@ services:
     image: b4bz/homer
     container_name: homer
     volumes:
-      - ${DOCKERDATA}assets/:/www/assets
+      - ${DOCKERDATA}homer/assets/:/www/assets
+      - ${PWD}/config.yml:/www/assets/config.yml
     ports:
       - 8080:8080
-    user: 1000:1000 # default
+    user: 0:0 # default
     environment:
       - INIT_ASSETS=1 # default
+    restart: unless-stopped
