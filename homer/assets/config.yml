@@ -121,7 +121,6 @@ services:
         url: "https://guacamole.bmont.com.br"
         # Optional tagstyle
         tagstyle: "is-success"
-        url: "#"
   - name: "Other group"
     icon: "fas fa-heartbeat"
     items:
