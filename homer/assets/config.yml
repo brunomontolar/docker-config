@@ -130,7 +130,7 @@ services:
         # subtitle: "Network-wide Ad Blocking" # optional, if no subtitle is defined, PiHole statistics will be shown
         tag: "dns"
         keywords: "pihole block dns"
-        url: "http://192.168.86.210:81/admin"
+        url: "https://pihole.bmont/admin"
         type: "PiHole" # optional, loads a specific component that provides extra features. MUST MATCH a file name (without file extension) available in `src/components/services`
         target: "_blank" # optional html a tag target attribute
         # class: "green" # optional custom CSS class for card, useful with custom stylesheet
