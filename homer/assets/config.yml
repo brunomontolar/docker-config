@@ -2,7 +2,7 @@
 title: "Bmont Dashboard"
 subtitle: "Homer"
 # documentTitle: "Welcome" # Customize the browser tab text
-logo: "logo.svg"
+logo: "assets/logo.svg"
 
 header: true # Set to false to hide the header
 # Optional: Different hotkey for search, defaults to "/"
