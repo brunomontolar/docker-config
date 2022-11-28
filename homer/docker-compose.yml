@@ -5,10 +5,12 @@ services:
     image: b4bz/homer
     container_name: homer
     volumes:
-      - ./assets:/www/assets
+      - type: bind
+        source: ${DOCKERDATA}homer
+        target: /www/assets
+      - type: bind
+        source: ./assets/config.yml
+        target: /www/assets/config.yml
     ports:
       - 8080:8080
-    user: 1000:1000
-    environment:
-      - INIT_ASSETS=0
     restart: unless-stopped
