@@ -62,6 +62,8 @@ services:
     dns:
       - 127.0.0.1
       - 10.2.0.200 # Points to unbound
+    ports:
+      - "81:80/tcp"
     environment:
       TZ: ${TZ}
       WEBPASSWORD: "" # Blank password - Can be whatever you want.

@@ -1,0 +1,25 @@
+version: '3.3'
+services:
+  authelia:
+    image: authelia/authelia
+    volumes:
+      - ${DOCKERDATA}authelia/config:/config
+    ports:
+      - 9091:9091
+    restart: unless-stopped
+    healthcheck:
+      disable: true
+    environment:
+      - TZ=${TZ}
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:alpine
+    volumes:
+      - ${DOCKERDATA}redis:/data
+    expose:
+      - 6379
+    restart: unless-stopped
+    environment:
+      - TZ=${TZ}
