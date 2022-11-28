@@ -135,3 +135,17 @@ services:
         target: "_blank" # optional html a tag target attribute
         # class: "green" # optional custom CSS class for card, useful with custom stylesheet
         # background: red # optional color for card to set color directly without custom stylesheet
+      - name: "SpeedTest"
+        type: "SpeedtestTracker"
+      - name: "Proxmox - Node"
+        logo: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/proxmox.png"
+        type: "Proxmox"
+        tag: "sys"
+        #url: "https://192.168.70.200"
+        #endpoint: "https://192.168.70.200"
+        url: "https://192.168.70.200"
+        endpoint: "https://192.168.70.200"
+        node: "proxmox"
+        warning_value: 50
+        danger_value: 80
+        api_token: "PVEAPIToken=root@pam!homer=649e4886-4ca9-487a-9cb6-f8f3ff3c064a"        
