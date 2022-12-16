@@ -2,9 +2,10 @@
 title: "Bmont Dashboard"
 subtitle: "Homer"
 # documentTitle: "Welcome" # Customize the browser tab text
-logo: "assets/logo.png"
+logo: "assets/icons/pwa-512x512.png"
 
 header: true # Set to false to hide the header
+footer: false
 # Optional: Different hotkey for search, defaults to "/"
 # hotkey:
 #   search: "Shift"
@@ -63,40 +64,16 @@ colors:
     link-hover: "#ffdd57"
     # background-image: "assets/your/dark/bg.png"
 
-# Optional message
-# message:
-  # url: "https://<my-api-endpoint>" # Can fetch information from an endpoint to override value below.
-  # mapping: # allows to map fields from the remote format to the one expected by Homer
-  #   title: 'id' # use value from field 'id' as title
-  #   content: 'value' # value from field 'value' as content
-  # refreshInterval: 10000 # Optional: time interval to refresh message
-  #
-  # Real example using chucknorris.io for showing Chuck Norris facts as messages:
-  # url: https://api.chucknorris.io/jokes/random
-  # mapping:
-  #   title: 'id'
-  #   content: 'value'
-  # refreshInterval: 10000
-  # style: "is-warning"
-  # title: "Optional message!"
-  # icon: "fa fa-exclamation-triangle"
-  # content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-
-# Optional navbar
 # links: [] # Allows for navbar (dark mode, layout, and search) without any links
 links:
   - name: "GitHub"
     icon: "fab fa-github"
     url: "https://github.com/brunomontolar"
     target: "_blank" # optional html tag target attribute
-  - name: "Wiki"
-    icon: "fas fa-book"
-    url: "https://github.com/brunomontolar"
-  # this will link to a second homer page that will load config from page2.yml and keep default config values as in config.yml file
-  # see url field and assets/page.yml used in this example:
-  # - name: "Second Page"
-  #   icon: "fas fa-file-alt"
-  #   url: "#page2"
+  # - name: "Wiki"
+  #   icon: "fas fa-book"
+  #   url: "https://github.com/brunomontolar"
+  #   target: "_blank"
 
 # Services
 # First level array represents a group.
@@ -107,6 +84,60 @@ services:
     # A path to an image can also be provided. Note that icon take precedence if both icon and logo are set.
     # logo: "path/to/logo"
     items:
+      - name: "TrueNAS"
+        logo: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/truenascore.png"
+        subtitle: "TrueNAS"
+        tag: "app"
+        keywords: "NAS Storage Media"
+        url: "https://truenas.bmont.com.br"
+        target: "_blank"
+      - name: "HomeAssistant"
+        logo: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/home-assistant.svg"
+        subtitle: "Home Automation"
+        tag: "app"
+        url: "https://homeassistant.bmont.com.br"
+        target: "_blank"
+        tagstyle: "is-success"
+      - name: "Octoprint"
+        logo: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/octoprint.png"
+        subtitle: "3D Printer"
+        tag: "app"
+        url: "https://octoprint.bmont.com.br"
+        target: "_blank"
+        tagstyle: "is-success"        
+  - name: "Server"
+    icon: "fa-solid fa-server"
+    items:
+      - name: "Proxmox - Node"
+        logo: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/proxmox.png"
+        type: "Proxmox"
+        tag: "sys"
+        url: "https://proxmox.bmont.com.br"
+        endpoint: "https://proxmox.bmont.com.br"
+        target: "_blank"
+        node: "proxmox"
+        warning_value: 50
+        danger_value: 80
+        hide_decimals: true
+        small_font_on_small_screens: true
+        small_font_on_desktop: true
+        api_token: "MYAPITOKEN" 
+      - name: "Guacamole"
+        logo: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/guacamole.png"
+        subtitle: "Another application"
+        tag: "app"
+        url: "https://guacamole.bmont.com.br"
+        target: "_blank"
+        tagstyle: "is-success" 
+      - name: "Octoprint"
+        logo: "https://cdn-icons-png.flaticon.com/512/3112/3112529.png"
+        apikey: "MYAPIKEY"
+        url: "https://octoprint.bmont.com.br"
+        display: "text" # 'text' or 'bar'. Default to `text`.
+        type: "OctoPrint"      
+  - name: "Network"
+    icon: "fa-solid fa-ethernet"
+    items:
       - name: "NPM"
         logo: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/nginxproxymanager.png"
         subtitle: "Nginx Proxy Manager"
@@ -114,38 +145,18 @@ services:
         keywords: "proxy nginx npm"
         url: "https://npm.bmont.com.br"
         target: "_blank"
-      - name: "Guacamole"
-        logo: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/guacamole.png"
-        subtitle: "Another application"
+      - name: "UptimeKuma"
+        logo: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/uptime-kuma.svg"
         tag: "app"
-        url: "https://guacamole.bmont.com.br"
+        url: "https://uptimekuma.bmont.com.br"
         target: "_blank"
-        # Optional tagstyle
-        tagstyle: "is-success"
-  - name: "Other group"
-    icon: "fas fa-heartbeat"
-    items:
+        tagstyle: "is-success"        
+        type: "UptimeKuma"
+        slug: "bmontdashboard"
       - name: "Pi-hole"
         logo: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/pihole.svg"
-        # subtitle: "Network-wide Ad Blocking" # optional, if no subtitle is defined, PiHole statistics will be shown
         tag: "dns"
         keywords: "pihole block dns"
         url: "https://pihole.bmont.com.br/admin"
-        type: "PiHole" # optional, loads a specific component that provides extra features. MUST MATCH a file name (without file extension) available in `src/components/services`
-        target: "_blank" # optional html a tag target attribute
-        # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-        # background: red # optional color for card to set color directly without custom stylesheet
-      - name: "SpeedTest"
-        type: "SpeedtestTracker"
-      - name: "Proxmox - Node"
-        logo: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/proxmox.png"
-        type: "Proxmox"
-        tag: "sys"
-        #url: "https://192.168.70.200"
-        #endpoint: "https://192.168.70.200"
-        url: "https://192.168.70.200"
-        endpoint: "https://192.168.70.200"
-        node: "proxmox"
-        warning_value: 50
-        danger_value: 80
-        api_token: "PVEAPIToken=root@pam!homer=649e4886-4ca9-487a-9cb6-f8f3ff3c064a"        
+        type: "PiHole"
+        target: "_blank"
