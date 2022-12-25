@@ -10,6 +10,9 @@ services:
     volumes:
       - ${DOCKERDATA}/jupyterlab:/home/${USERNAME}/work
     environment:
-      NB_USER=${USERNAME}
-      CHOWN_HOME= yes
-    working_dir="/home/${NB_USER}"
+      - NB_USER=${USERNAME}
+      - NB_UID=1000
+      - NB_GID=1000
+      - NB_GROUP=${USERNAME}
+      - CHOWN_HOME=yes
+    working_dir: /home/${USERNAME}
