@@ -1,0 +1,15 @@
+version: "3.1"
+services:
+  jupyterlab:
+    image: jupyter/datascience-notebook:latest
+    container_name: jupyterlab
+    user: root
+    ports:
+      - "8888:8888"
+    restart: unless-stopped
+    volumes:
+      - ${DOCKERDATA}/jupyterlab:/home/${USERNAME}/work
+    environment:
+      NB_USER=${USERNAME}
+      CHOWN_HOME= yes
+    working_dir="/home/${NB_USER}"
