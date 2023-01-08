@@ -6,7 +6,7 @@ services:
     container_name: homer
     user: 0:0
     volumes:
-      - ./assets:/www/assets
+      - ${DOCKERDATA}homer/assets:/www/assets
     ports:
       - 8080:8080
     restart: unless-stopped
