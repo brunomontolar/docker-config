@@ -31,8 +31,8 @@ services:
       guacnetwork_compose:
     restart: always
     volumes:
-    - .${DOCKERDATA}guacamole/init:/docker-entrypoint-initdb.d:z
-    - .${DOCKERDATA}guacamole/data:/var/lib/postgresql/data:Z
+    - ${DOCKERDATA}guacamole/init:/docker-entrypoint-initdb.d:z
+    - ${DOCKERDATA}guacamole/data:/var/lib/postgresql/data:Z
 
   # guacamole
   guacamole:
