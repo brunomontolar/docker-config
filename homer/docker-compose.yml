@@ -6,7 +6,17 @@ services:
     container_name: homer
     user: 0:0
     volumes:
-      - ./assets:/www/assets
+      - ${DOCKERDATA}homer/assets:/www/assets
     ports:
       - 8080:8080
+    restart: unless-stopped
+  filebrowser:
+    image: filebrowser/filebrowser
+    container_name: filebrowser
+    user: 0:0
+    ports:
+      - 8081:80
+    volumes:
+       - ${DOCKERDATA}homer:/srv
+       - ${DOCKERDATA}filebrowser/filebrowser.db:/database.db
     restart: unless-stopped
