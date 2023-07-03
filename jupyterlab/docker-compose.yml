@@ -15,4 +15,6 @@ services:
       - NB_GID=1000
       - NB_GROUP=${USERNAME}
       - CHOWN_HOME=yes
-    working_dir: /home/${USERNAME}
+      - GRANT_SUDO=yes
+      - RESTARTABLE=yes
+    working_dir: /home/${USERNAME}/work
